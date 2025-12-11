@@ -25,8 +25,8 @@
 - [X] T003 Configure Docusaurus sidebar for `module2-digital-twin` in `website/sidebars.ts`
 - [X] T004 Create `ros2_packages` directory for ROS 2 code `module2-digital-twin/ros2_packages/`
 - [X] T005 Create `unity_projects` directory for Unity code `module2-digital-twin/unity_projects/`
-- [ ] T006 Create `content` directory for Docusaurus supporting files `module2-digital-twin/content/`
-- [ ] T007 Create `tests` directory for module-level validation scripts `module2-digital-twin/tests/`
+- [X] T006 Create `content` directory for Docusaurus supporting files `module2-digital-twin/content/`
+- [X] T007 Create `tests` directory for module-level validation scripts `module2-digital-twin/tests/`
 
 ---
 
@@ -36,10 +36,10 @@
 
 **⚠️ CRITICAL**: No user story content creation can begin until this phase is complete.
 
-- [ ] T008 Setup ROS 2 workspace in `module2-digital-twin/ros2_packages/` including `src` directory and `install/setup.bash`
-- [ ] T009 Create initial `CMakeLists.txt` and `package.xml` for `humanoid_description` ROS 2 package `module2-digital-twin/ros2_packages/src/humanoid_description/`
-- [ ] T010 Prepare Unity 3D project: create new Unity project, configure basic settings, and save to `module2-digital-twin/unity_projects/HumanoidScene/`
-- [ ] T011 Install necessary ROS-Unity bridge packages/dependencies for Unity project `module2-digital-twin/unity_projects/HumanoidScene/Assets/`
+- [X] T008 Setup ROS 2 workspace in `module2-digital-twin/ros2_packages/` including `src` directory and `install/setup.bash`
+- [X] T009 Create initial `CMakeLists.txt` and `package.xml` for `humanoid_description` ROS 2 package `module2-digital-twin/ros2_packages/src/humanoid_description/`
+- [X] T010 Prepare Unity 3D project: create new Unity project, configure basic settings, and save to `module2-digital-twin/unity_projects/HumanoidScene/`
+- [X] T011 Install necessary ROS-Unity bridge packages/dependencies for Unity project `module2-digital-twin/unity_projects/HumanoidScene/Assets/`
 
 **Checkpoint**: Foundation ready - user story content creation can now begin.
 
@@ -53,16 +53,16 @@
 
 ### Content Creation for User Story 1
 
-- [ ] T012 [US1] Create Docusaurus chapter for "Introduction to Digital Twin Simulation" in `website/docs/module2-digital-twin/chapter1.md`
-- [ ] T013 [US1] Describe concepts of digital twins, advantages of simulation, and overview of Gazebo/Unity pipelines in `website/docs/module2-digital-twin/chapter1.md`
-- [ ] T014 [P] [US1] Create Docusaurus chapter for "Gazebo Physics Simulation" in `website/docs/module2-digital-twin/chapter2.md`
-- [ ] T015 [P] [US1] Develop basic URDF for a simple humanoid arm (`simple_humanoid_arm.urdf`) in `module2-digital-twin/ros2_packages/src/humanoid_description/urdf/`
-- [ ] T016 [P] [US1] Create a Gazebo world file (`simple_arm.world`) for simulating the humanoid arm in `module2-digital-twin/ros2_packages/src/humanoid_description/worlds/`
-- [ ] T017 [P] [US1] Create a ROS 2 launch file (`display_arm_launch.py`) to spawn the URDF in Gazebo `module2-digital-twin/ros2_packages/src/humanoid_description/launch/`
-- [ ] T018 [US1] Document setting up a Gazebo world and simulating gravity, collisions, and robot dynamics in `website/docs/module2-digital-twin/chapter2.md`
-- [ ] T019 [US1] Implement a mini-lab for loading the humanoid URDF and simulating simple movement in `website/docs/module2-digital-twin/chapter2.md`
-- [ ] T020 [P] [US1] Implement a simple joint controller (e.g., mock_joint_controller.py) for the humanoid arm in `module2-digital-twin/ros2_packages/src/humanoid_description/scripts/`
-- [ ] T021 [US1] Validate all code samples for US1 in Gazebo environment.
+- [X] T012 [US1] Create Docusaurus chapter for "Introduction to Digital Twin Simulation" in `website/docs/module2-digital-twin/chapter1.md`
+- [X] T013 [US1] Describe concepts of digital twins, advantages of simulation, and overview of Gazebo/Unity pipelines in `website/docs/module2-digital-twin/chapter1.md`
+- [X] T014 [P] [US1] Create Docusaurus chapter for "Gazebo Physics Simulation" in `website/docs/module2-digital-twin/chapter2.md`
+- [X] T015 [P] [US1] Develop basic URDF for a simple humanoid arm (`simple_humanoid_arm.urdf`) in `module2-digital-twin/ros2_packages/src/humanoid_description/urdf/`
+- [X] T016 [P] [US1] Create a Gazebo world file (`simple_arm.world`) for simulating the humanoid arm in `module2-digital-twin/ros2_packages/src/humanoid_description/worlds/`
+- [X] T017 [P] [US1] Create a ROS 2 launch file (`display_arm_launch.py`) to spawn the URDF in Gazebo `module2-digital-twin/ros2_packages/src/humanoid_description/launch/`
+- [X] T018 [US1] Document setting up a Gazebo world and simulating gravity, collisions, and robot dynamics in `website/docs/module2-digital-twin/chapter2.md`
+- [X] T019 [US1] Implement a mini-lab for loading the humanoid URDF and simulating simple movement in `website/docs/module2-digital-twin/chapter2.md`
+- [X] T020 [P] [US1] Implement a simple joint controller (e.g., mock_joint_controller.py) for the humanoid arm in `module2-digital-twin/ros2_packages/src/humanoid_description/scripts/`
+- [X] T021 [US1] Validate all code samples for US1 in Gazebo environment.
 
 **Checkpoint**: User Story 1 content is complete and validated.
 
@@ -76,10 +76,10 @@
 
 ### Content Creation for User Story 2
 
-- [ ] T022 [US2] Create Docusaurus chapter for "Unity for High-Fidelity Rendering" in `website/docs/module2-digital-twin/chapter3.md`
-- [ ] T023 [P] [US2] Prepare 3D model assets (e.g., `.fbx`, textures) suitable for Unity import `module2-digital-twin/unity_projects/HumanoidScene/Assets/Models/`
-- [ ] T024 [P] [US2] Implement Unity scene for importing robots and environments (`HumanoidRobotScene.unity`) in `module2-digital-twin/unity_projects/HumanoidScene/Assets/Scenes/`
-- [ ] T025 [US2] Document realistic lighting, textures, and basic human-robot interaction scenarios in Unity in `website/docs/module2-digital-twin/chapter3.md`
+- [X] T022 [US2] Create Docusaurus chapter for "Unity for High-Fidelity Rendering" in `website/docs/module2-digital-twin/chapter3.md`
+- [X] T023 [P] [US2] Prepare 3D model assets (e.g., .fbx, textures) suitable for Unity import `module2-digital-twin/unity_projects/HumanoidScene/Assets/Models/`
+- [X] T024 [P] [US2] Implement Unity scene for importing robots and environments (`HumanoidRobotScene.unity`) in `module2-digital-twin/unity_projects/HumanoidScene/Assets/Scenes/`
+- [X] T025 [US2] Document realistic lighting, textures, and basic human-robot interaction scenarios in Unity in `website/docs/module2-digital-twin/chapter3.md`
 - [ ] T026 [US2] Create a mini-lab for creating a basic interaction scene with a humanoid robot in `website/docs/module2-digital-twin/chapter3.md`
 - [ ] T027 [US2] Validate all Unity scenes and content for US2.
 

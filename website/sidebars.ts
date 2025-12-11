@@ -31,6 +31,23 @@ const sidebars: SidebarsConfig = {
         'module1-ros2-humanoid-control/chapter5',
       ],
     },
+    {
+      type: 'category',
+      label: 'Module 2: The Digital Twin',
+      link: {
+        type: 'generated-index',
+        title: 'Module 2 Overview',
+        description: 'An introduction to digital twin simulation with Gazebo and Unity.',
+        keywords: ['digital twin', 'simulation', 'gazebo', 'unity'],
+      },
+      items: [
+        'module2-digital-twin/chapter1',
+        'module2-digital-twin/chapter2',
+        'module2-digital-twin/chapter3',
+        'module2-digital-twin/chapter4',
+        'module2-digital-twin/chapter5',
+      ],
+    },
 
   ],
 };
