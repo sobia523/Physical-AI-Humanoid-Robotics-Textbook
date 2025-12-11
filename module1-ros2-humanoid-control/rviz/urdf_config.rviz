@@ -1,0 +1,149 @@
+# Rviz configuration for URDF display
+# Minimal configuration to display a URDF model
+
+Views:
+  - Alpha: 1
+    Target Frame: <Fixed Frame>
+    Title: Current View
+    Class: rviz_default_plugins/Orbit
+    Distance: 2.0
+    Enable: true
+    Focal Point:
+      X: 0
+      Y: 0
+      Z: 0
+    Near Clip: 0.01
+    Pitch: 0.785
+    Yaw: 2.356
+    Zoom: 1
+Fixed Frame: base_link
+Global Options:
+  Background Color: 48 58 72
+  Category Text Size: 10
+  Default Light: true
+  Description: null
+  Frame Rate: 30
+  Interactive: true
+  Show Debugger: false
+  Text Color: 255 255 255
+Panels:
+  - Class: rviz_default_plugins/Displays
+    Name: Displays
+    Enabled: true
+    Displays:
+      - Class: rviz_default_plugins/Global
+        Name: Global Options
+        Fixed Frame: base_link
+        Frame Rate: 30
+      - Class: rviz_default_plugins/RobotModel
+        Name: RobotModel
+        Alpha: 0.5
+        Description: null
+        Enabled: true
+        Robot Description: robot_description
+        TF Prefix: ""
+        Update Rate: 0
+      - Class: rviz_default_plugins/TF
+        Name: TF
+        Enabled: true
+        Show Arrows: true
+        Show Axes: true
+        Show Names: true
+        Tree:
+          base_link:
+            upper_arm_link:
+              forearm_link:
+                {}
+Max Render FPS: 30
+Toolbars:
+  - Name: "Tools"
+    Enabled: true
+    Tools:
+      - Class: rviz_default_plugins/MoveCamera
+        Name: "Move Camera"
+      - Class: rviz_default_plugins/Select
+        Name: "Select"
+      - Class: rviz_default_plugins/SetInitialPose
+        Name: "Set Initial Pose"
+      - Class: rviz_default_plugins/SetGoal
+        Name: "Set Goal"
+      - Class: rviz_default_plugins/Measure
+        Name: "Measure"
+      - Class: rviz_default_plugins/PublishPoint
+        Name: "Publish Point"
+      - Class: rviz_default_plugins/Interact
+        Name: "Interact"
+      - Class: rviz_default_plugins/FocusCamera
+        Name: "Focus Camera"
+      - Class: rviz_default_plugins/Reset
+        Name: "Reset"
+Plugins:
+  - rviz_default_plugins/Effort
+  - rviz_default_plugins/Imu
+  - rviz_default_plugins/Interactions
+  - rviz_default_plugins/Joy
+  - rviz_default_plugins/LaserScan
+  - rviz_default_plugins/Map
+  - rviz_default_plugins/Odometry
+  - rviz_default_plugins/Path
+  - rviz_default_plugins/Pointcloud
+  - rviz_default_plugins/Pose
+  - rviz_default_plugins/Range
+  - rviz_default_plugins/RobotModel
+  - rviz_default_plugins/SetInitialPose
+  - rviz_default_plugins/SetGoal
+  - rviz_default_plugins/TF
+  - rviz_default_plugins/Twist
+  - rviz_default_plugins/Vector
+  - rviz_default_plugins/Wrench
+Window Geometry:
+  Displays:
+    collapsed: false
+  History:
+    collapsed: false
+  Time:
+    collapsed: false
+  Selection:
+    collapsed: false
+  Property:
+    collapsed: false
+  Help:
+    collapsed: false
+  Fixed:
+    X: 0
+    Y: 0
+    Width: 1200
+    Height: 800
+  Floating:
+    X: 0
+    Y: 0
+    Width: 1200
+    Height: 800
+  FullScreen: false
+  Hide: false
+QoS:
+  Default:
+    Reliability: BEST_EFFORT
+    Durability: VOLATILE
+    Depth: 1
+    History: KEEP_LAST
+    Liveliness: AUTOMATIC
+    Deadline:
+      sec: 0
+      nsec: 0
+    Lifespan:
+      sec: 0
+      nsec: 0
+    Lease Duration:
+      sec: 0
+      nsec: 0
+    Avoid_ros_namespace_conventions: false
+    Ignore_local_publications: false
+    Dont_serialize: false
+    Max_samples: 0
+    Max_instances: 0
+    Max_samples_per_instance: 0
+    Disable_builtin_qos_provider: false
+    Transient_local: false
+    Volatile_local: false
+    System_default: false
