@@ -48,6 +48,23 @@ const sidebars: SidebarsConfig = {
         'module2-digital-twin/chapter5',
       ],
     },
+    {
+      type: 'category',
+      label: 'Module 3: The AI-Robot Brain (NVIDIA Isaac™)',
+      link: {
+        type: 'generated-index',
+        title: 'Module 3 Overview',
+        description: 'Implement advanced perception, navigation, and AI-driven humanoid control using NVIDIA Isaac tools.',
+        keywords: ['nvidia isaac', 'isaac sim', 'isaac ros', 'vslam', 'nav2', 'humanoid', 'robotics'],
+      },
+      items: [
+        'module3-ai-robot-brain/chapter1',
+        'module3-ai-robot-brain/chapter2',
+        'module3-ai-robot-brain/chapter3',
+        'module3-ai-robot-brain/chapter4',
+        'module3-ai-robot-brain/chapter5',
+      ],
+    },
 
   ],
 };

@@ -1,0 +1,86 @@
+# Rviz Configuration for VSLAM Visualization
+
+# This is a placeholder for the Rviz configuration file for VSLAM visualization.
+# It will be populated with display settings for robot pose, point clouds, and maps.
+#
+# To use this:
+# 1. Launch Rviz: rviz2 -d /path/to/this_file/vslam_config.rviz
+# 2. Configure topics manually or load existing display configurations.
+#
+# Example settings might include:
+# - RobotModel: Displays the URDF of the robot.
+# - Path: Displays the robot's trajectory (e.g., from /vslam/path).
+# - PointCloud2: Displays the VSLAM-generated map (e.g., from /vslam/map_points).
+# - TF: Displays the coordinate frames.
+Views:
+  Current:
+    Class: rviz_default_plugins/Orbit
+    Target Frame: <Fixed Frame> # e.g., "odom" or "map"
+    Yaw: 0
+    Pitch: 0
+    Distance: 5
+    X: 0
+    Y: 0
+    Z: 0
+Global Options:
+  Fixed Frame: odom # Should match the frame_id of VSLAM outputs
+  Background Color: 0.05 0.05 0.05
+  Default Light: true
+  Far Clip Distance: 10000
+  Near Clip Distance: 0.01
+Panels:
+  - Class: rviz_default_plugins/Displays
+    Name: Displays
+    Enabled: true
+    Dock Height: 200
+  - Class: rviz_default_plugins/Selection
+    Name: Selection
+    Enabled: true
+    Dock Height: 200
+Toolbars:
+  - Name: "Tools"
+    Visible: true
+Displays:
+  - Class: rviz_default_plugins/TF
+    Name: TF
+    Enabled: true
+    Show Arrows: true
+    Show Axes: true
+    Show Names: false
+    Marker Scale: 1
+    Transforms:
+      - odom
+      - base_link
+      # Add other relevant frames here (e.g., camera_link, lidar_link)
+  - Class: rviz_default_plugins/RobotModel
+    Name: RobotModel
+    Enabled: true
+    Robot Description: robot_description # This needs to be published via robot_state_publisher
+    # For Isaac Sim, you might have a different way to load the URDF/USD
+  - Class: rviz_default_plugins/Path
+    Name: Estimated Robot Path
+    Enabled: true
+    Topic: /vslam/path
+    Buffer Length: 1000
+    Color: 0 1 0 # Green
+    Line Style: Lines
+    Alpha: 1
+  - Class: rviz_default_plugins/Pose
+    Name: Estimated Robot Pose
+    Enabled: true
+    Topic: /vslam/pose
+    Color: 1 0 0 # Red
+    Arrow Length: 0.5
+    Arrow Shaft Length: 0.3
+    Arrow Shaft Radius: 0.05
+    Arrow Head Length: 0.2
+    Arrow Head Radius: 0.1
+    Shape: Arrow
+  - Class: rviz_default_plugins/PointCloud2
+    Name: VSLAM Map Points
+    Enabled: true
+    Topic: /vslam/map_points
+    Color: 1 1 0 # Yellow
+    Size (Pixels): 2
+    Alpha: 1
+    Style: Points

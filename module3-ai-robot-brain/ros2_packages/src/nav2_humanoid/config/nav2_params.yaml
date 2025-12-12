@@ -1,0 +1,101 @@
+# This file contains placeholder configurations for the Nav2 navigation stack adapted for a bipedal humanoid robot.
+# These parameters would typically be tuned for a specific robot and environment.
+# VSLAM output will be used for localization input.
+
+# Common Nav2 parameters
+planner_server:
+  ros__parameters:
+    use_sim_time: True
+    planner_plugins: ["GridBased"]
+    GridBased:
+      plugin: "nav2_navfn_planner/NavfnPlanner"
+      # Other planner specific parameters
+
+controller_server:
+  ros__parameters:
+    use_sim_time: True
+    controller_plugins: ["FollowPath"]
+    FollowPath:
+      plugin: "nav2_controller/FollowPathController"
+      # Other controller specific parameters (e.g., PID gains for bipedal movement)
+
+bt_navigator:
+  ros__parameters:
+    use_sim_time: True
+    # Behavior tree file can be customized for humanoid specific behaviors
+    # default_bt_filepath: "/path/to/humanoid_behavior_tree.xml" 
+
+# Localization (e.g., AMCL for map-based, or direct VSLAM output)
+# For this module, we assume VSLAM provides accurate pose.
+# If AMCL were used, it would subscribe to LiDAR scans and transform.
+amcl:
+  ros__parameters:
+    use_sim_time: True
+    set_initial_pose: True
+    # ... other AMCL parameters
+    # For VSLAM integration, AMCL might be bypassed or configured to use VSLAM's pose directly
+    # or a dedicated localization node that fuses VSLAM with IMU would publish to /amcl_pose.
+    # We conceptualize that VSLAM directly provides a suitable pose estimate.
+
+# Map server (if using a static map, otherwise VSLAM will generate one)
+map_server:
+  ros__parameters:
+    use_sim_time: True
+    # yaml_filename: "/path/to/static_map.yaml" # If using a pre-built map
+
+# Costmap configurations
+local_costmap:
+  ros__parameters:
+    use_sim_time: True
+    global_frame: odom
+    robot_base_frame: base_link
+    update_frequency: 5.0
+    publish_frequency: 2.0
+    resolution: 0.05
+    transform_tolerance: 0.5
+    plugins: ["voxel_layer", "obstacle_layer", "inflation_layer"]
+    voxel_layer:
+      plugin: "nav2_voxel_grid/VoxelLayer"
+      # ... parameters
+    obstacle_layer:
+      plugin: "nav2_costmap_2d/ObstacleLayer"
+      # Subscribes to /scan topic (from simulated LiDAR)
+      observation_sources: scan
+      scan: {topic: /scan, max_obstacle_height: 2.0, clear_threshold: 0.25, mark_threshold: 0.75, data_type: LaserScan, clearing: True, marking: True, inf_is_valid: True}
+    inflation_layer:
+      plugin: "nav2_costmap_2d/InflationLayer"
+      # ... parameters
+
+global_costmap:
+  ros__parameters:
+    use_sim_time: True
+    global_frame: map
+    robot_base_frame: base_link
+    update_frequency: 1.0
+    publish_frequency: 1.0
+    resolution: 0.05
+    transform_tolerance: 0.5
+    plugins: ["static_layer", "obstacle_layer", "inflation_layer"]
+    static_layer:
+      plugin: "nav2_costmap_2d/StaticLayer"
+      # If VSLAM is generating a map, this layer could be dynamically updated or replaced.
+      # For now, assumes a static map or a map provided by VSLAM.
+    obstacle_layer:
+      plugin: "nav2_costmap_2d/ObstacleLayer"
+      observation_sources: scan
+      scan: {topic: /scan, max_obstacle_height: 2.0, clear_threshold: 0.25, mark_threshold: 0.75, data_type: LaserScan, clearing: True, marking: True, inf_is_valid: True}
+    inflation_layer:
+      plugin: "nav2_costmap_2d/InflationLayer"
+
+# Life cycle manager (orchestrates Nav2 nodes)
+lifecycle_manager:
+  ros__parameters:
+    autostart: True
+    node_names:
+      - planner_server
+      - controller_server
+      - bt_navigator
+      - amcl
+      - map_server # Only if using static map or a specific map-generating node
+      - local_costmap
+      - global_costmap
