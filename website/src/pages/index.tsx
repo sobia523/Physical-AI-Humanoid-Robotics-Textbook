@@ -1,43 +1,29 @@
-import type {ReactNode} from 'react';
-import clsx from 'clsx';
-import Link from '@docusaurus/Link';
-import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
+import React from 'react';
 import Layout from '@theme/Layout';
-import HomepageFeatures from '@site/src/components/HomepageFeatures';
-import Heading from '@theme/Heading';
+// Import custom components
+// import Navbar from '../components/Navbar/Navbar'; // Navbar is configured in docusaurus.config.ts
+import Hero from '../components/Hero/Hero';
+import ModulesGrid from '../components/ModulesGrid/ModulesGrid';
+// import SearchBar from '../components/SearchBar/SearchBar'; // SearchBar is integrated into Navbar/Hero
+// import Footer from '../components/Footer/Footer'; // Footer is configured in docusaurus.config.ts
 
-import styles from './index.module.css';
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext'; // For site config
+import Head from '@docusaurus/Head'; // For meta tags
 
-function HomepageHeader() {
-  const {siteConfig} = useDocusaurusContext();
-  return (
-    <header className={clsx('hero hero--primary', styles.heroBanner)}>
-      <div className="container">
-        <Heading as="h1" className="hero__title">
-          {siteConfig.title}
-        </Heading>
-        <p className="hero__subtitle">{siteConfig.tagline}</p>
-        <div className={styles.buttons}>
-          <Link
-            className="button button--secondary button--lg"
-            to="/docs/intro">
-            Docusaurus Tutorial - 5min ⏱️
-          </Link>
-        </div>
-      </div>
-    </header>
-  );
-}
+export default function Home(): JSX.Element {
+  const { siteConfig } = useDocusaurusContext();
 
-export default function Home(): ReactNode {
-  const {siteConfig} = useDocusaurusContext();
   return (
     <Layout
-      title={`Hello from ${siteConfig.title}`}
-      description="Description will go into a meta tag in <head />">
-      <HomepageHeader />
+      title={`Welcome to ${siteConfig.title}`}
+      description={siteConfig.tagline}>
+      <Head>
+        <html data-theme="light" /> {/* Default to light theme initially */}
+      </Head>
       <main>
-        <HomepageFeatures />
+        {/* Custom components will be rendered here */}
+        <Hero />
+        <ModulesGrid />
       </main>
     </Layout>
   );
