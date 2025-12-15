@@ -7,7 +7,7 @@ import Layout from '@theme/Layout';
 import styles from './index.module.css';
 
 function HomepageHeader() {
-  const {siteConfig} = useDocusaurusContext();
+  const { siteConfig } = useDocusaurusContext();
   return (
     <header className={clsx('hero hero--primary', styles.heroBanner)}>
       <div className="container">
@@ -46,7 +46,7 @@ const FeatureList = [
         environments like Gazebo and Unity for realistic robot behavior.
       </>
     ),
-    link: '/docs/module2-digital-twin/index',
+    link: '/docs/module2-digital-twin',
   },
   {
     title: 'Module 3: Isaac AI Robot Brain',
@@ -57,7 +57,7 @@ const FeatureList = [
         cognitive planning, and integrating AI models.
       </>
     ),
-    link: '/docs/module3-isaac-ai-robot-brain/index',
+    link: '/docs/module3-isaac-ai-robot-brain',
   },
   {
     title: 'Module 4: VLA Robotics',
@@ -72,7 +72,7 @@ const FeatureList = [
   },
 ];
 
-function Feature({Svg, title, description, link}) {
+function Feature({ Svg, title, description, link }) {
   return (
     <div className={clsx('col col--4')}>
       <div className="text--center">
@@ -101,7 +101,7 @@ function HomepageModules() {
 }
 
 export default function Home() {
-  const {siteConfig} = useDocusaurusContext();
+  const { siteConfig } = useDocusaurusContext();
   return (
     <Layout
       title={`Hello from ${siteConfig.title}`}
