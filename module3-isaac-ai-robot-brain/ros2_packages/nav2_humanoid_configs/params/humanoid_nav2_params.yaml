@@ -1,0 +1,64 @@
+# Nav2 Parameters for Bipedal Humanoid (Placeholder)
+
+# This file would contain detailed configuration for the Nav2 stack,
+# tuned specifically for a bipedal humanoid robot.
+
+## Common Parameters
+bt_navigator:
+  ros__parameters:
+    use_sim_time: True
+    global_frame: map
+    robot_base_frame: base_link
+    odom_topic: /odom
+    # Other common parameters...
+
+## Controller Server Parameters
+controller_server:
+  ros__parameters:
+    use_sim_time: True
+    controller_frequency: 20.0
+    min_x_velocity_threshold: 0.001
+    min_y_velocity_threshold: 0.001
+    min_theta_velocity_threshold: 0.001
+    # Specific controller plugins and their parameters for bipedal motion
+    controller_plugins: ['FollowPath']
+    FollowPath:
+      plugin: "nav2_regulated_pure_pursuit_controller::RegulatedPurePursuitController"
+      # Parameters specific to bipedal locomotion
+      desired_linear_vel: 0.2
+      max_linear_accel: 0.5
+      max_angular_accel: 1.0
+      inflation_layer_size: 0.1 # Example, adjust for humanoid footprint
+
+## Planner Server Parameters
+planner_server:
+  ros__parameters:
+    use_sim_time: True
+    planner_plugins: ['GridBased']
+    GridBased:
+      plugin: "nav2_navfn_planner::NavfnPlanner"
+      # Parameters for global planning
+
+## Recoveries
+recovery_server:
+  ros__parameters:
+    use_sim_time: True
+    recoveries: ['Spin', 'BackUp', 'Wait']
+
+## Costmap Parameters (global and local)
+# These would be highly tuned for humanoid interaction with environment
+global_costmap:
+  global_costmap:
+    ros__parameters:
+      # ...
+local_costmap:
+  local_costmap:
+    ros__parameters:
+      # ...
+
+# Robot footprint (critical for bipedal navigation)
+# Example of a rectangular footprint, adjust for actual humanoid dimensions
+footprint: [[-0.2, -0.2], [-0.2, 0.2], [0.2, 0.2], [0.2, -0.2]]
+footprint_padding: 0.01
+
+# Add other specific parameters for bipedal motion, dynamic obstacles, etc.

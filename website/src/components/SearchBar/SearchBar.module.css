@@ -1,0 +1,47 @@
+.searchWrapper {
+  /* Styling for the search bar container */
+  margin-left: var(--ifm-spacing-md);
+  display: flex;
+  align-items: center;
+}
+
+/* Example styles for a custom search input if we were to build it from scratch */
+.searchInput {
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: var(--ifm-border-radius);
+  padding: var(--ifm-spacing-sm);
+  background-color: var(--ifm-background-color);
+  color: var(--ifm-font-color-base);
+  transition: all 0.2s ease-in-out;
+}
+
+.searchInput:focus {
+  border-color: var(--ifm-color-primary);
+  box-shadow: 0 0 0 3px var(--ifm-color-primary-light);
+  outline: none;
+}
+
+/* Styles for the search results dropdown */
+.searchResultsDropdown {
+  /* Position and styling for the dropdown menu */
+  position: absolute;
+  top: 100%; /* Position below the search bar */
+  left: 0;
+  right: 0;
+  background-color: var(--ifm-background-color);
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: var(--ifm-border-radius);
+  box-shadow: var(--ifm-shadow-lg);
+  max-height: 400px;
+  overflow-y: auto;
+  z-index: 1000;
+}
+
+.searchResultItem {
+  padding: var(--ifm-spacing-sm) var(--ifm-spacing-md);
+  cursor: pointer;
+  
+  &:hover {
+    background-color: var(--ifm-hover-background-color);
+  }
+}

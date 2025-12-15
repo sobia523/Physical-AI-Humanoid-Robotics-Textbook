@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.ros.org/xml/ns/package_format3"?>
+<package format="3">
+  <name>isaac_ros_vslam_configs</name>
+  <version>0.0.0</version>
+  <description>Placeholder package for Isaac ROS VSLAM configurations and launch files.</description>
+  <maintainer email="user@example.com">User</maintainer>
+  <license>TODO: License declaration</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>rclpy</depend>
+  <depend>sensor_msgs</depend>
+  <depend>geometry_msgs</depend>
+  <depend>nav_msgs</depend>
+
+  <!-- These would be the actual Isaac ROS VSLAM dependencies -->
+  <!-- <depend>isaac_ros_argus_camera</depend> -->
+  <!-- <depend>isaac_ros_vslam</depend> -->
+  <!-- <depend>isaac_ros_nvblox</depend> -->
+
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

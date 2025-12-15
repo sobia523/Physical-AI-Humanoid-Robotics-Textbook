@@ -10,6 +10,23 @@ This document provides a brief overview of how to get the VLA module running.
 1.  **ROS 2 Humble/Iron**: Ensure you have a working installation of ROS 2.
 2.  **Gazebo/Unity**: Have Gazebo or Unity installed and configured to work with ROS 2.
 3.  **OpenAI API Key**: Obtain an API key from OpenAI to use their language models.
+    Set your OpenAI API key as an environment variable:
+
+    On Windows (Command Prompt):
+    ```cmd
+    set OPENAI_API_KEY=your_openai_api_key_here
+    ```
+
+    On Windows (PowerShell):
+    ```powershell
+    $env:OPENAI_API_KEY="your_openai_api_key_here"
+    ```
+
+    On Linux/macOS:
+    ```bash
+    export OPENAI_API_KEY="your_openai_api_key_here"
+    ```
+    Replace `your_openai_api_key_here` with your actual OpenAI API key.
 4.  **Python 3.10+**: With the necessary libraries (`openai`, `rclpy`, etc.).
 5.  **Microphone**: A working microphone for voice commands.
 

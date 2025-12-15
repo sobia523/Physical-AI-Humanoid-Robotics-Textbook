@@ -1,0 +1,92 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--ifm-spacing-md) var(--ifm-spacing-lg);
+  background-color: var(--ifm-background-color);
+  color: var(--ifm-font-color-base);
+  border-bottom: 1px solid var(--ifm-navbar-border-color); /* Subtle bottom border */
+  box-shadow: var(--ifm-navbar-shadow); /* Example subtle shadow */
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  transition: all 0.2s ease-in-out;
+}
+
+.navbarLeft, .navbarCenter, .navbarRight {
+  display: flex;
+  align-items: center;
+}
+
+.navbarBrand {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+  font-weight: var(--ifm-font-weight-bold);
+  font-size: 1.2rem;
+}
+
+.navbarLogo {
+  height: 2rem; /* Adjust as needed */
+  margin-right: var(--ifm-spacing-sm);
+}
+
+.navbarTitle {
+  white-space: nowrap;
+}
+
+.navItem {
+  margin: 0 var(--ifm-spacing-sm);
+  color: inherit;
+  text-decoration: none;
+  font-weight: var(--ifm-font-weight-headings);
+  padding: var(--ifm-spacing-xs) var(--ifm-spacing-sm);
+  border-radius: var(--ifm-border-radius);
+
+  &:hover {
+    color: var(--ifm-color-primary);
+    background-color: var(--ifm-hover-background-color);
+    text-decoration: none;
+  }
+}
+
+.githubButton {
+  margin-left: var(--ifm-spacing-md);
+  color: inherit;
+  /* Additional styling for GitHub button, e.g., square shape, icon only */
+}
+
+.githubIcon {
+  width: 24px;
+  height: 24px;
+  fill: currentColor; /* Use current text color */
+}
+
+.colorModeToggle {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  margin-left: var(--ifm-spacing-md);
+  color: var(--ifm-font-color-base); /* Use base font color */
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 996px) {
+  .navbarCenter {
+    display: none; /* Hide center links on smaller screens for simplicity now */
+  }
+
+  .navbar {
+    padding: var(--ifm-spacing-sm) var(--ifm-spacing-md);
+  }
+
+  .navbarTitle {
+    display: none; /* Hide title on very small screens if logo is enough */
+  }
+}

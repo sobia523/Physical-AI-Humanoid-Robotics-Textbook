@@ -1,0 +1,11 @@
+controller_manager:
+  ros__parameters:
+    update_rate: 100  # Hz
+
+    shoulder_controller:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+    shoulder_controller:
+      type: velocity_controllers/JointVelocityController
+      joints:
+        - shoulder_joint

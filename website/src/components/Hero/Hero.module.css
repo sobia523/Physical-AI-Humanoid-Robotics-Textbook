@@ -1,0 +1,94 @@
+.heroSection {
+  background: linear-gradient(180deg, var(--ifm-background-color) 0%, var(--ifm-color-primary-lightest) 100%);
+  padding: var(--ifm-spacing-xxl) 0;
+  text-align: center;
+  position: relative;
+  overflow: hidden; /* For potential background effects */
+}
+
+[data-theme='dark'] .heroSection {
+  background: linear-gradient(180deg, var(--ifm-background-color) 0%, var(--ifm-color-primary-darkest) 100%);
+}
+
+.heroContainer {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 var(--ifm-spacing-lg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.heroTitle {
+  font-size: var(--ifm-h1-font-size);
+  font-weight: var(--ifm-font-weight-bold);
+  margin-bottom: var(--ifm-spacing-md);
+  color: var(--ifm-font-color-base);
+}
+
+.heroSubtitle {
+  font-size: 1.5rem; /* Larger than default */
+  color: var(--ifm-font-color-secondary);
+  max-width: 800px; /* Limit width for readability */
+  margin-bottom: var(--ifm-spacing-xl);
+}
+
+.buttons {
+  display: flex;
+  gap: var(--ifm-spacing-md);
+  margin-bottom: var(--ifm-spacing-xl);
+}
+
+.buttonPrimary, .buttonOutline {
+  font-size: 1.1rem;
+  padding: var(--ifm-spacing-sm) var(--ifm-spacing-lg);
+  border-radius: var(--ifm-border-radius-lg);
+  transition: all 0.2s ease-in-out;
+}
+
+.buttonPrimary {
+  background-color: var(--ifm-color-primary);
+  color: white;
+  border-color: var(--ifm-color-primary);
+}
+
+.buttonPrimary:hover {
+  background-color: var(--ifm-color-primary-dark);
+  border-color: var(--ifm-color-primary-dark);
+  transform: translateY(-2px); /* Subtle lift effect */
+  box-shadow: var(--ifm-shadow-md);
+}
+
+.buttonOutline {
+  background-color: transparent;
+  color: var(--ifm-color-primary);
+  border: 2px solid var(--ifm-color-primary);
+}
+
+.buttonOutline:hover {
+  background-color: var(--ifm-color-primary-lighter);
+  color: var(--ifm-color-primary-darkest);
+  transform: translateY(-2px); /* Subtle lift effect */
+  box-shadow: var(--ifm-shadow-md);
+}
+
+.heroTag {
+  font-size: 0.9rem;
+  color: var(--ifm-font-color-secondary);
+  opacity: 0.7;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .heroTitle {
+    font-size: 2.5rem;
+  }
+
+  .heroSubtitle {
+    font-size: 1.2rem;
+  }
+
+  .buttons {
+    flex-direction: column;
+  }
+}

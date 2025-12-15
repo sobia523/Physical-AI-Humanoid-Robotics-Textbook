@@ -1,0 +1,10 @@
+# Placeholder for Humanoid Robot USD Model
+
+This file should contain the USD (Universal Scene Description) definition for a basic humanoid robot.
+It would typically include:
+- Geometry for the robot links
+- Joint definitions for articulation
+- Material properties for rendering
+- Attachment points for sensors
+
+**Note**: Replace this content with an actual USD model file for a humanoid robot, compatible with NVIDIA Isaac Sim.

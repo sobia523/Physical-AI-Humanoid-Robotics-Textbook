@@ -1,0 +1,10 @@
+# Placeholder for Basic Isaac Sim Environment USD Model
+
+This file should contain the USD (Universal Scene Description) definition for a basic simulation environment.
+It would typically include:
+- Ground plane or basic terrain
+- Static obstacles (walls, blocks)
+- Lighting setup
+- Material properties for rendering
+
+**Note**: Replace this content with an actual USD model file for a basic Isaac Sim environment.
