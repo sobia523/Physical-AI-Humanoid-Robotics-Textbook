@@ -17,9 +17,9 @@
 
 **Purpose**: Minimal setup as the `backend/` project and core dependencies are already established from Spec-1.
 
-- [ ] T001 Create the `backend/retrieval/` directory.
-- [ ] T002 Create an empty Python file: `backend/retrieval/retriever.py`.
-- [ ] T003 Update `backend/requirements.txt` if any new packages are required (e.g., for specialized query preprocessing if identified later).
+- [x] T001 Create the `backend/retrieval/` directory.
+- [x] T002 Create an empty Python file: `backend/retrieval/retriever.py`.
+- [x] T003 Update `backend/requirements.txt` if any new packages are required (e.g., for specialized query preprocessing if identified later).
 
 ---
 
@@ -27,7 +27,7 @@
 
 **Purpose**: No new foundational tasks beyond what's already configured for the `backend/` project.
 
-- [ ] T004 Ensure `backend/.env` is properly configured with `COHERE_API_KEY` and `QDRANT_URL`. (Manual check for user)
+- [x] T004 Ensure `backend/.env` is properly configured with `COHERE_API_KEY` and `QDRANT_URL`. (Manual check for user)
 
 ---
 
@@ -39,11 +39,11 @@
 
 ### Implementation for User Story 1
 
-- [ ] T005 [US1] Implement `query_embeddings` generation logic in `backend/retrieval/retriever.py` using `backend/embeddings/generator.py`.
-- [ ] T006 [US1] Implement core semantic search logic in `backend/retrieval/retriever.py` to query Qdrant for `top-k` similar vectors.
-- [ ] T007 [US1] Implement result formatting in `backend/retrieval/retriever.py` to return `RetrievedChunk` objects, including `text`, `metadata`, and `score`.
-- [ ] T008 [US1] Create the test script `backend/scripts/test_retrieval.py` and implement initial semantic query test cases.
-- [ ] T009 [US1] Integrate logging into `backend/retrieval/retriever.py` and `backend/scripts/test_retrieval.py`.
+- [x] T005 [US1] Implement `query_embeddings` generation logic in `backend/retrieval/retriever.py` using `backend/embeddings/generator.py`.
+- [x] T006 [US1] Implement core semantic search logic in `backend/retrieval/retriever.py` to query Qdrant for `top-k` similar vectors.
+- [x] T007 [US1] Implement result formatting in `backend/retrieval/retriever.py` to return `RetrievedChunk` objects, including `text`, `metadata`, and `score`.
+- [x] T008 [US1] Create the test script `backend/scripts/test_retrieval.py` and implement initial semantic query test cases.
+- [x] T009 [US1] Integrate logging into `backend/retrieval/retriever.py` and `backend/scripts/test_retrieval.py`.
 
 **Checkpoint**: At this point, basic semantic search should be functional and testable.
 
@@ -57,11 +57,11 @@
 
 ### Implementation for User Story 2
 
-- [ ] T010 [US2] Enhance semantic search logic in `backend/retrieval/retriever.py` to accept and apply `source_url` filters.
-- [ ] T011 [US2] Enhance semantic search logic in `backend/retrieval/retriever.py` to accept and apply `section` filters.
-- [ ] T012 [US2] Expand `backend/scripts/test_retrieval.py` to include test cases for filtered queries (by `source_url` and `section`).
-- [ ] T013 [US2] Expand `backend/scripts/test_retrieval.py` to include checks for metadata integrity and traceability in retrieved chunks.
-- [ ] T014 [US2] Add latency measurement and reporting to `backend/scripts/test_retrieval.py` for both unfiltered and filtered queries.
+- [x] T010 [US2] Enhance semantic search logic in `backend/retrieval/retriever.py` to accept and apply `source_url` filters.
+- [x] T011 [US2] Enhance semantic search logic in `backend/retrieval/retriever.py` to accept and apply `section` filters.
+- [x] T012 [US2] Expand `backend/scripts/test_retrieval.py` to include test cases for filtered queries (by `source_url` and `section`).
+- [x] T013 [US2] Expand `backend/scripts/test_retrieval.py` to include checks for metadata integrity and traceability in retrieved chunks.
+- [x] T014 [US2] Add latency measurement and reporting to `backend/scripts/test_retrieval.py` for both unfiltered and filtered queries.
 
 **Checkpoint**: All core retrieval logic, including filtering and validation, should be functional.
 
@@ -71,9 +71,9 @@
 
 **Purpose**: Finalize documentation and perform cleanup.
 
-- [ ] T015 Update `backend/README.md` with instructions on running retrieval tests and configuring any new settings.
-- [ ] T016 Code cleanup and refactoring across all new modules for clarity and efficiency.
-- [ ] T017 Final review of logging to ensure all critical operations and errors are captured in the retrieval modules.
+- [x] T015 Update `backend/README.md` with instructions on running retrieval tests and configuring any new settings.
+- [x] T016 Code cleanup and refactoring across all new modules for clarity and efficiency.
+- [x] T017 Final review of logging to ensure all critical operations and errors are captured in the retrieval modules.
 
 ---
 
