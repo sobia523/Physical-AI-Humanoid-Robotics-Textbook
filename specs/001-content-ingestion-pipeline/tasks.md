@@ -17,12 +17,12 @@
 
 **Purpose**: Initialize the backend project and create the necessary directory and file structure.
 
-- [ ] T001 Create the root directory for the pipeline at `backend/`
-- [ ] T002 [P] Inside `backend/`, initialize a Python project using `uv init`
-- [ ] T003 [P] Create the directory structure: `backend/config/`, `backend/ingestion/`, `backend/embeddings/`, `backend/vector_store/`, `backend/scripts/`, `backend/logs/`
-- [ ] T004 [P] Create empty Python files: `backend/ingestion/discovery.py`, `backend/ingestion/extraction.py`, `backend/ingestion/chunking.py`, `backend/embeddings/generator.py`, `backend/vector_store/qdrant_manager.py`, `backend/scripts/run_pipeline.py`
-- [ ] T005 [P] Create the dependencies file `backend/requirements.txt` with initial packages: `requests`, `beautifulsoup4`, `cohere`, `qdrant-client`, `python-dotenv`
-- [ ] T006 [P] Create the example environment file `backend/.env.example` for required API keys (COHERE_API_KEY, QDRANT_URL, QDRANT_API_KEY)
+- [x] T001 Create the root directory for the pipeline at `backend/`
+- [x] T002 [P] Inside `backend/`, initialize a Python project using `uv init`
+- [x] T003 [P] Create the directory structure: `backend/config/`, `backend/ingestion/`, `backend/embeddings/`, `backend/vector_store/`, `backend/scripts/`, `backend/logs/`
+- [x] T004 [P] Create empty Python files: `backend/ingestion/discovery.py`, `backend/ingestion/extraction.py`, `backend/ingestion/chunking.py`, `backend/embeddings/generator.py`, `backend/vector_store/qdrant_manager.py`, `backend/scripts/run_pipeline.py`
+- [x] T005 [P] Create the dependencies file `backend/requirements.txt` with initial packages: `requests`, `beautifulsoup4`, `cohere`, `qdrant-client`, `python-dotenv`
+- [x] T006 [P] Create the example environment file `backend/.env.example` for required API keys (COHERE_API_KEY, QDRANT_URL, QDRANT_API_KEY)
 
 ---
 
@@ -30,7 +30,7 @@
 
 **Purpose**: Ensure the environment is configured before implementation begins.
 
-- [ ] T007 Configure local environment by creating a `backend/.env` file and populating it with valid API keys.
+- [x] T007 Configure local environment by creating a `backend/.env` file and populating it with valid API keys.
 
 ---
 
@@ -42,13 +42,13 @@
 
 ### Implementation for User Story 1
 
-- [ ] T008 [US1] Implement URL discovery logic in `backend/ingestion/discovery.py` to fetch and parse the sitemap.xml.
-- [ ] T009 [US1] Implement HTML content extraction in `backend/ingestion/extraction.py` using `BeautifulSoup`.
-- [ ] T010 [US1] Implement semantic chunking strategy in `backend/ingestion/chunking.py` based on HTML headings.
-- [ ] T011 [US1] Implement embedding generation in `backend/embeddings/generator.py` to batch calls to the Cohere API.
-- [ ] T012 [US1] Implement vector storage logic in `backend/vector_store/qdrant_manager.py` to connect to Qdrant and handle idempotent insertions.
-- [ ] T013 [US1] Implement the main pipeline orchestration script `backend/scripts/run_pipeline.py` to connect and execute all modules in sequence.
-- [ ] T014 [US1] Add logging throughout all modules to write progress and errors to files in the `backend/logs/` directory.
+- [x] T008 [US1] Implement URL discovery logic in `backend/ingestion/discovery.py` to fetch and parse the sitemap.xml.
+- [x] T009 [US1] Implement HTML content extraction in `backend/ingestion/extraction.py` using `BeautifulSoup`.
+- [x] T010 [US1] Implement semantic chunking strategy in `backend/ingestion/chunking.py` based on HTML headings.
+- [x] T011 [US1] Implement embedding generation in `backend/embeddings/generator.py` to batch calls to the Cohere API.
+- [x] T012 [US1] Implement vector storage logic in `backend/vector_store/qdrant_manager.py` to connect to Qdrant and handle idempotent insertions.
+- [x] T013 [US1] Implement the main pipeline orchestration script `backend/scripts/run_pipeline.py` to connect and execute all modules in sequence.
+- [x] T014 [US1] Add logging throughout all modules to write progress and errors to files in the `backend/logs/` directory.
 
 **Checkpoint**: At this point, the entire ingestion pipeline should be functional and capable of populating the vector database from the source website.
 
@@ -62,10 +62,10 @@
 
 ### Implementation for User Story 2
 
-- [ ] T015 [US2] Create a new validation script at `backend/scripts/validate_data.py`.
-- [ ] T016 [US2] In `validate_data.py`, implement logic to connect to Qdrant and fetch a random sample of vector records.
-- [ ] T017 [US2] In `validate_data.py`, implement checks to verify that the sampled records contain valid, non-empty metadata fields (`source_url`, `page_title`, `section`, `chunk_index`, `raw_text`).
-- [ ] T018 [US2] In `validate_data.py`, implement a semantic search query to retrieve chunks for a known sentence and verify the correct content is returned.
+- [x] T015 [US2] Create a new validation script at `backend/scripts/validate_data.py`.
+- [x] T016 [US2] In `validate_data.py`, implement logic to connect to Qdrant and fetch a random sample of vector records.
+- [x] T017 [US2] In `validate_data.py`, implement checks to verify that the sampled records contain valid, non-empty metadata fields (`source_url`, `page_title`, `section`, `chunk_index`, `raw_text`).
+- [x] T018 [US2] In `validate_data.py`, implement a semantic search query to retrieve chunks for a known sentence and verify the correct content is returned.
 
 **Checkpoint**: The validation script should be able to confirm that the pipeline from User Story 1 is producing high-quality, correct data.
 
@@ -75,9 +75,9 @@
 
 **Purpose**: Finalize documentation and perform cleanup.
 
-- [ ] T019 Update the `README.md` in the `backend/` directory with detailed instructions on setup and execution, based on the `quickstart.md`.
-- [ ] T020 Code cleanup and refactoring across all modules for clarity and efficiency.
-- [ ] T021 Final review of logging to ensure all critical operations and errors are captured.
+- [x] T019 Update the `README.md` in the `backend/` directory with detailed instructions on setup and execution, based on the `quickstart.md`.
+- [x] T020 Code cleanup and refactoring across all modules for clarity and efficiency.
+- [x] T021 Final review of logging to ensure all critical operations and errors are captured.
 
 ---
 
