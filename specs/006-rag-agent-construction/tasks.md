@@ -17,10 +17,10 @@
 
 **Purpose**: Create necessary directories and add new core dependencies.
 
-- [ ] T001 Create the `backend/agent/` directory.
-- [ ] T002 Create an empty Python file: `backend/agent/tools.py`.
-- [ ] T003 Create an empty Python file: `backend/agent/agent_orchestrator.py`.
-- [ ] T004 Update `backend/requirements.txt` to include `fastapi`, `uvicorn`, `openai`, `pydantic-settings`.
+- [x] T001 Create the `backend/agent/` directory.
+- [x] T002 Create an empty Python file: `backend/agent/tools.py`.
+- [x] T003 Create an empty Python file: `backend/agent/agent_orchestrator.py`.
+- [x] T004 Update `backend/requirements.txt` to include `fastapi`, `uvicorn`, `openai`, `pydantic-settings`.
 
 ---
 
@@ -28,9 +28,9 @@
 
 **Purpose**: Initialize the FastAPI application and ensure environment variables are configured.
 
-- [ ] T005 Create the main FastAPI application file: `backend/main.py`.
-- [ ] T006 Add a basic FastAPI endpoint (e.g., `/health`) in `backend/main.py` for testing.
-- [ ] T007 Ensure `backend/.env` is properly configured with `OPENAI_API_KEY`. (Manual check for user)
+- [x] T005 Create the main FastAPI application file: `backend/main.py`.
+- [x] T006 Add a basic FastAPI endpoint (e.g., `/health`) in `backend/main.py` for testing.
+- [x] T007 Ensure `backend/.env` is properly configured with `OPENAI_API_KEY`. (Manual check for user)
 
 ---
 
@@ -42,13 +42,13 @@
 
 ### Implementation for User Story 1
 
-- [ ] T008 [US1] Implement `RetrieverTool` in `backend/agent/tools.py` that encapsulates the `Retriever.search` logic from Spec-005.
-- [ ] T009 [US1] Implement the agent's core logic in `backend/agent/agent_orchestrator.py` using `openai.lib.Assistant` and integrating `RetrieverTool`.
-- [ ] T010 [US1] Implement the `/agent/ask` FastAPI endpoint in `backend/main.py` to accept `AgentRequest` and return `AgentResponse`.
-- [ ] T011 [US1] Integrate `backend/agent/agent_orchestrator.py` into the `/agent/ask` endpoint handler in `backend/main.py`.
-- [ ] T012 [US1] Create the test script `backend/scripts/test_agent_api.py` and implement initial test cases for basic question answering.
-- [ ] T013 [US1] Implement citation parsing from LLM response in `backend/agent/agent_orchestrator.py`.
-- [ ] T014 [US1] Integrate logging into `backend/agent/tools.py`, `backend/agent/agent_orchestrator.py`, `backend/main.py`, and `backend/scripts/test_agent_api.py`.
+- [x] T008 [US1] Implement `RetrieverTool` in `backend/agent/tools.py` that encapsulates the `Retriever.search` logic from Spec-005.
+- [x] T009 [US1] Implement the agent's core logic in `backend/agent/agent_orchestrator.py` using `openai.lib.Assistant` and integrating `RetrieverTool`.
+- [x] T010 [US1] Implement the `/agent/ask` FastAPI endpoint in `backend/main.py` to accept `AgentRequest` and return `AgentResponse`.
+- [x] T011 [US1] Integrate `backend/agent/agent_orchestrator.py` into the `/agent/ask` endpoint handler in `backend/main.py`.
+- [x] T012 [US1] Create the test script `backend/scripts/test_agent_api.py` and implement initial test cases for basic question answering.
+- [x] T013 [US1] Implement citation parsing from LLM response in `backend/agent/agent_orchestrator.py`.
+- [x] T014 [US1] Integrate logging into `backend/agent/tools.py`, `backend/agent/agent_orchestrator.py`, `backend/main.py`, and `backend/scripts/test_agent_api.py`.
 
 **Checkpoint**: At this point, basic question answering through the FastAPI endpoint should be functional and testable.
 
@@ -62,11 +62,11 @@
 
 ### Implementation for User Story 2
 
-- [ ] T015 [US2] Enhance `RetrieverTool` in `backend/agent/tools.py` to accept and pass `source_url_constraint` and `section_constraint` to the underlying `Retriever.search` method.
-- [ ] T016 [US2] Enhance agent prompting in `backend/agent/agent_orchestrator.py` to instruct the LLM to strictly adhere to provided constraints and cite sources from the constrained context.
-- [ ] T017 [US2] Expand `backend/scripts/test_agent_api.py` to include test cases for constrained queries (by `source_url` and `section`).
-- [ ] T018 [US2] Expand `backend/scripts/test_agent_api.py` to include checks for agent's refusal to answer when outside constrained knowledge.
-- [ ] T019 [US2] Add latency measurement and reporting to `backend/scripts/test_agent_api.py` for FastAPI endpoint responses.
+- [x] T015 [US2] Enhance `RetrieverTool` in `backend/agent/tools.py` to accept and pass `source_url_constraint` and `section_constraint` to the underlying `Retriever.search` method.
+- [x] T016 [US2] Enhance agent prompting in `backend/agent/agent_orchestrator.py` to instruct the LLM to strictly adhere to provided constraints and cite sources from the constrained context.
+- [x] T017 [US2] Expand `backend/scripts/test_agent_api.py` to include test cases for constrained queries (by `source_url` and `section`).
+- [x] T018 [US2] Expand `backend/scripts/test_agent_api.py` to include checks for agent's refusal to answer when outside constrained knowledge.
+- [x] T019 [US2] Add latency measurement and reporting to `backend/scripts/test_agent_api.py` for FastAPI endpoint responses.
 
 **Checkpoint**: The agent should now handle constrained queries correctly and validate adherence.
 
@@ -76,9 +76,9 @@
 
 **Purpose**: Finalize documentation and perform cleanup.
 
-- [ ] T020 Update `backend/README.md` with instructions on running the FastAPI server and agent tests.
-- [ ] T021 Code cleanup and refactoring across all new modules for clarity and efficiency.
-- [ ] T022 Final review of logging to ensure all critical operations and errors are captured.
+- [x] T020 Update `backend/README.md` with instructions on running the FastAPI server and agent tests.
+- [x] T021 Code cleanup and refactoring across all new modules for clarity and efficiency.
+- [x] T022 Final review of logging to ensure all critical operations and errors are captured.
 
 ---
 
