@@ -1,0 +1,106 @@
+openapi: 3.0.0
+info:
+  title: RAG Agent API
+  version: 1.0.0
+  description: API for a Retrieval-Augmented Generation (RAG) agent that answers questions about book content using a Qdrant vector database and OpenAI Agents SDK.
+
+paths:
+  /agent/ask:
+    post:
+      summary: Ask the RAG Agent a question
+      description: Submits a natural language query to the RAG agent and receives an answer augmented with retrieved book content and citations.
+      operationId: askAgent
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AgentRequest'
+      responses:
+        '200':
+          description: Successful response from the agent
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentResponse'
+        '400':
+          description: Bad Request - Invalid input or constraints
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+        '500':
+          description: Internal Server Error - Agent or retrieval system failure
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+
+components:
+  schemas:
+    AgentRequest:
+      type: object
+      properties:
+        query:
+          type: string
+          description: The user's natural language question.
+          example: "What is a URDF model in ROS 2?"
+        source_url_constraint:
+          type: string
+          nullable: true
+          description: Optional URL to limit the retrieval to specific source.
+          example: "https://example.com/docs/module1/chapter1"
+        section_constraint:
+          type: string
+          nullable: true
+          description: Optional section title to limit the retrieval to a specific section.
+          example: "Understanding URDF Models"
+      required:
+        - query
+
+    AgentResponse:
+      type: object
+      properties:
+        answer:
+          type: string
+          description: The agent's synthesized answer to the user's query.
+          example: "A URDF (Unified Robot Description Format) model is used in ROS 2 to describe a robot's physical and kinematic properties."
+        citations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Citation'
+          description: A list of citations or source references used to form the answer.
+        message:
+          type: string
+          nullable: true
+          description: An informational message (e.g., if the agent cannot answer the question).
+          example: "I cannot answer this question based on the provided context."
+      required:
+        - answer
+        - citations
+
+    Citation:
+      type: object
+      properties:
+        source_url:
+          type: string
+          description: The full URL of the original document.
+          example: "https://example.com/docs/module1/chapter1"
+        section:
+          type: string
+          description: The specific section or heading within the document.
+          example: "Understanding URDF Models"
+        raw_text_snippet:
+          type: string
+          description: A short snippet of the raw text from the cited chunk that was most relevant to the answer.
+          example: "URDF models are XML files that describe a robot's links and joints."
+      required:
+        - source_url
+        - section
+        - raw_text_snippet
