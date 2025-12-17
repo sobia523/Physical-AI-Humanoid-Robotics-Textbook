@@ -1,0 +1,7 @@
+This file serves as a placeholder for Unity project assets related to importing robots and environments.
+Detailed steps for creating and configuring these assets can be found in Chapter 3: Unity for High-Fidelity Rendering (module2-digital-twin/content/chapter3.md).
+
+To develop this example:
+1. Open the Unity project located in this directory (`module2-digital-twin/unity_projects/`) with Unity Editor.
+2. Follow the instructions in Chapter 3 to import a robot model and an environment.
+3. Save the Unity scene and relevant assets.

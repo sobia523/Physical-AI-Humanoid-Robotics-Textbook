@@ -22,6 +22,7 @@ const sidebars: SidebarsConfig = {
         title: 'Module 1 Overview',
         description: 'An introduction to ROS 2 for humanoid robot control.',
         keywords: ['ros2', 'humanoid', 'robotics'],
+        slug: '/category/module1-ros2-humanoid-control',
       },
       items: [
         'module1-ros2-humanoid-control/chapter1',
