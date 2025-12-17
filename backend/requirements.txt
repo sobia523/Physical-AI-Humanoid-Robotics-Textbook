@@ -1,5 +1,13 @@
+<<<<<<< HEAD
 fastapi
 uvicorn
 python-dotenv
 google-generativeai
 qdrant-client
+=======
+requests
+beautifulsoup4
+cohere
+qdrant-client
+python-dotenv
+>>>>>>> 41be336f828935fd8bc7d283fc75a9373d0da8f6
