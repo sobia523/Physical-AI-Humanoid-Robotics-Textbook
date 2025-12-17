@@ -1,4 +1,4 @@
-```python
+
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -20,6 +20,7 @@ origins = [
     "http://localhost:3000",
     "http://localhost:3001",
     "http://localhost:8000",
+    "*", # Allow all for Vercel deployment
 ]
 
 app.add_middleware(
@@ -56,6 +57,16 @@ async def ask_agent(request: FrontendRequest):
         return response
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/agent/ingest")
+async def trigger_ingest():
+    """Trigger document ingestion manually."""
+    try:
+        ingest_docs()
+        return {"message": "Ingestion completed successfully."}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
 
 @app.get("/")
 def read_root():

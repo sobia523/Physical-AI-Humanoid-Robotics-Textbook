@@ -7,10 +7,12 @@ from qdrant_client.http import models
 from dotenv import load_dotenv
 
 # Load environment variables
-load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), "../.env"))
+load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), "../.env"), override=True)
 
 # Configure Gemini
 GEN_API_KEY = os.getenv("GEMINI_API_KEY")
+print(f"DEBUG: GEMINI_API_KEY loaded: {repr(GEN_API_KEY)}")
+
 if GEN_API_KEY:
     genai.configure(api_key=GEN_API_KEY)
 
@@ -28,17 +30,24 @@ if QDRANT_URL and QDRANT_API_KEY:
 
 def get_embedding(text):
     if not GEN_API_KEY: return None
-    try:
-        result = genai.embed_content(
-            model="models/embedding-001",
-            content=text,
-            task_type="retrieval_document",
-            title="Embedding of single chunk"
-        )
-        return result['embedding']
-    except Exception as e:
-        print(f"Embedding error: {e}")
-        return None
+    # Retry mechanism for 429 Quota errors
+    for attempt in range(3):
+        try:
+            result = genai.embed_content(
+                model="models/embedding-001",
+                content=text,
+                task_type="retrieval_document",
+                title="Embedding of single chunk"
+            )
+            return result['embedding']
+        except Exception as e:
+            if "429" in str(e):
+                print(f"Quota hit, waiting {5 * (attempt + 1)}s...")
+                time.sleep(5 * (attempt + 1))
+            else:
+                print(f"Embedding error: {e}")
+                return None
+    return None
 
 def ingest_docs():
     """Reads all markdown files from website/docs and ingests into Qdrant."""
@@ -46,70 +55,73 @@ def ingest_docs():
         print("Skipping ingestion: Client or Key missing")
         return
 
-    # Check if collection exists
-    collections = q_client.get_collections().collections
-    exists = any(c.name == COLLECTION_NAME for c in collections)
-    
-    if not exists:
-        print(f"Creating collection {COLLECTION_NAME}...")
-        q_client.create_collection(
-            collection_name=COLLECTION_NAME,
-            vectors_config=models.VectorParams(size=768, distance=models.Distance.COSINE),
-        )
-    
-    # Check if empty
-    count_result = q_client.count(collection_name=COLLECTION_NAME)
-    if count_result.count > 0:
-        print("Collection already has data. Skipping ingestion.")
-        return
+    try:
+        # Check if collection exists
+        collections = q_client.get_collections().collections
+        exists = any(c.name == COLLECTION_NAME for c in collections)
+        
+        if not exists:
+            print(f"Creating collection {COLLECTION_NAME}...")
+            q_client.create_collection(
+                collection_name=COLLECTION_NAME,
+                vectors_config=models.VectorParams(size=768, distance=models.Distance.COSINE),
+            )
+        
+        # Check if empty - SKIP AGGRESSIVE INGESTION IF DATA EXISTS
+        count_result = q_client.count(collection_name=COLLECTION_NAME)
+        if count_result.count > 0:
+            print("Collection already has data. Skipping ingestion.")
+            return
 
-    print("Ingesting documents...")
-    # Base path for docs
-    base_docs_path = os.path.join(os.path.dirname(__file__), "../../website/docs")
-    docs_path = os.path.join(base_docs_path, "**/*.md")
-    files = glob.glob(docs_path, recursive=True)
-    
-    points = []
-    idx = 0
-    for f_path in files:
-        try:
-            with open(f_path, 'r', encoding='utf-8') as f:
-                content = f.read()
-            
-            # Use relative path for citation source (e.g. module1/chapter1.md)
-            rel_path = os.path.relpath(f_path, base_docs_path).replace("\\", "/")
-            
-            # Simple chunking by paragraphs for this repair
-            chunks = content.split('\n\n')
-            for chunk in chunks:
-                if len(chunk.strip()) < 50: continue
+        print("Ingesting documents...")
+        # Base path for docs
+        base_docs_path = os.path.join(os.path.dirname(__file__), "../../website/docs")
+        docs_path = os.path.join(base_docs_path, "**/*.md")
+        files = glob.glob(docs_path, recursive=True)
+        
+        points = []
+        idx = 0
+        MAX_CHUNKS_TO_INGEST = 10 # LIMIT FOR FREE TIER (Prevents freezing)
+        
+        for f_path in files[:MAX_CHUNKS_TO_INGEST]: # Initial Safety Limit
+            try:
+                with open(f_path, 'r', encoding='utf-8') as f:
+                    content = f.read()
                 
-                embedding = get_embedding(chunk)
-                if embedding:
-                    points.append(models.PointStruct(
-                        id=idx,
-                        vector=embedding,
-                        payload={"text": chunk, "source": rel_path}
-                    ))
-                    idx += 1
+                rel_path = os.path.relpath(f_path, base_docs_path).replace("\\", "/")
+                
+                chunks = content.split('\n\n')
+                for chunk in chunks:
+                    if len(chunk.strip()) < 50: continue
                     
-                    if len(points) >= 50:
-                        q_client.upload_points(collection_name=COLLECTION_NAME, points=points)
-                        print(f"Uploaded {len(points)} chunks...")
-                        points = []
-                        time.sleep(1) # Rate limit protection
-        except Exception as e:
-            print(f"Error reading {f_path}: {e}")
+                    embedding = get_embedding(chunk)
+                    if embedding:
+                        points.append(models.PointStruct(
+                            id=idx,
+                            vector=embedding,
+                            payload={"text": chunk, "source": rel_path}
+                        ))
+                        idx += 1
+                        time.sleep(2) # Force 2s delay between embeddings
+                        
+                        if len(points) >= 10: # Smaller batch
+                            q_client.upload_points(collection_name=COLLECTION_NAME, points=points)
+                            print(f"Uploaded batch...")
+                            points = []
+            except Exception as e:
+                print(f"Error processing {f_path}: {e}")
 
-    if points:
-        q_client.upload_points(collection_name=COLLECTION_NAME, points=points)
-    print("Ingestion complete.")
+        if points:
+            q_client.upload_points(collection_name=COLLECTION_NAME, points=points)
+        print("Ingestion complete (Tier limited).")
+        
+    except Exception as e:
+        print(f"Ingestion critical failure: {e}")
 
-# Trigger ingestion on import (simplified for "fix it" request)
-try:
-    ingest_docs()
-except Exception as e:
-    print(f"Ingestion failed: {e}")
+
+# Removed auto-ingestion on import to prevent server startup timeouts.
+# Use the dedicated /ingest endpoint or run ingest_data.py script.
+
 
 async def get_answer(query: str, selected_text: str = None):
     if not GEN_API_KEY:
@@ -162,13 +174,28 @@ async def get_answer(query: str, selected_text: str = None):
     prompt += "Answer:"
     
     try:
-        model = genai.GenerativeModel('gemini-pro')
-        response = model.generate_content(prompt)
-        return {
-            "answer": response.text,
-            "citations": citations,
-            "message": "Generated by Gemini"
-        }
+        # User has access to Gemini 2.0/2.5 series. Using standard Flash for best stability on Free Tier.
+        model = genai.GenerativeModel('models/gemini-flash-latest')
+        
+        # Retry logic for generation (handle 429 quota limits)
+        for attempt in range(3):
+            try:
+                response = model.generate_content(prompt)
+                return {
+                    "answer": response.text,
+                    "citations": citations,
+                    "message": "Generated by Gemini"
+                }
+            except Exception as e:
+                if "429" in str(e):
+                    wait_time = 10 * (attempt + 1)
+                    print(f"Generation Quota hit, waiting {wait_time}s...")
+                    time.sleep(wait_time)
+                else:
+                    raise e # Re-raise other errors
+        
+        return {"answer": "I am currently overloaded (Free Tier Limit). Please try again in 1 minute.", "citations": []}
+
     except Exception as e:
         return {"answer": f"Error: {str(e)}", "citations": []}
 

@@ -17,9 +17,9 @@
 
 **Purpose**: Prepare the Docusaurus frontend for integration.
 
-- [ ] T001 Navigate to the `website/` directory and install Docusaurus dependencies (`npm install` or `yarn install`).
-- [ ] T002 Create `website/src/components/` directory for custom React components.
-- [ ] T003 Create `website/.env` file with `REACT_APP_RAG_AGENT_API_URL` pointing to the backend.
+- [x] T001 Navigate to the `website/` directory and install Docusaurus dependencies (`npm install` or `yarn install`).
+- [x] T002 Create `website/src/components/` directory for custom React components.
+- [x] T003 Create `website/.env` file with `REACT_APP_RAG_AGENT_API_URL` pointing to the backend.
 
 ---
 
@@ -27,8 +27,8 @@
 
 **Purpose**: Set up the Docusaurus theme for custom UI components.
 
-- [ ] T004 Swizzle the Docusaurus theme `Layout` component: `npm run swizzle @docusaurus/theme-classic Layout -- --eject`.
-- [ ] T005 Create an empty React component file: `website/src/components/ChatWidget.js`.
+- [x] T004 Swizzle the Docusaurus theme `Layout` component: `npm run swizzle @docusaurus/theme-classic Layout -- --eject`.
+- [x] T005 Create an empty React component file: `website/src/components/ChatWidget.js`.
 
 ---
 
@@ -40,14 +40,14 @@
 
 ### Implementation for User Story 1
 
-- [ ] T006 [US1] Implement the basic floating button UI for `ChatWidget` in `website/src/components/ChatWidget.js`.
-- [ ] T007 [US1] Implement the expandable chat panel UI for `ChatWidget` including an input field and display area.
-- [ ] T008 [US1] Inject `ChatWidget` into `website/src/theme/Layout/index.js` (or `index.tsx`).
-- [ ] T009 [US1] Implement HTTP POST request logic from `ChatWidget` to the backend `/agent/ask` endpoint, handling `FrontendRequest`.
-- [ ] T010 [US1] Implement `FrontendResponse` parsing and display `answer` text in `ChatWidget`.
-- [ ] T011 [US1] Implement loading indicators in `ChatWidget` while awaiting backend response.
-- [ ] T012 [US1] Implement basic error handling and display for API communication failures in `ChatWidget`.
-- [ ] T013 [US1] Display citations in `ChatWidget` with `source_url` and `section` information.
+- [x] T006 [US1] Implement the basic floating button UI for `ChatWidget` in `website/src/components/ChatWidget.js`.
+- [x] T007 [US1] Implement the expandable chat panel UI for `ChatWidget` including an input field and display area.
+- [x] T008 [US1] Inject `ChatWidget` into `website/src/theme/Layout/index.js` (or `index.tsx`).
+- [x] T009 [US1] Implement HTTP POST request logic from `ChatWidget` to the backend `/agent/ask` endpoint, handling `FrontendRequest`.
+- [x] T010 [US1] Implement `FrontendResponse` parsing and display `answer` text in `ChatWidget`.
+- [x] T011 [US1] Implement loading indicators in `ChatWidget` while awaiting backend response.
+- [x] T012 [US1] Implement basic error handling and display for API communication failures in `ChatWidget`.
+- [x] T013 [US1] Display citations in `ChatWidget` with `source_url` and `section` information.
 
 **Checkpoint**: Basic free-form question answering from the UI should be functional.
 
@@ -61,12 +61,12 @@
 
 ### Implementation for User Story 2
 
-- [ ] T014 [US2] Implement text selection capture using `window.getSelection()` in `ChatWidget` or a separate utility.
-- [ ] T015 [US2] Implement UI to trigger a selected text query (e.g., a tooltip with "Ask about this" button).
-- [ ] T016 [US2] Pass `selected_text_constraint`, `source_url_constraint`, and `section_constraint` (from current page context) to the backend `FrontendRequest`.
-- [ ] T017 [US2] Enhance `ChatWidget` to display responses for constrained queries, clearly indicating any applied constraints.
-- [ ] T018 [US2] Make citations clickable links in `ChatWidget` that navigate to `source_url` and scroll to the `section`.
-- [ ] T019 [US2] Implement client-side logic to dynamically extract the `source_url` and nearest `section` from the current page.
+- [x] T014 [US2] Implement text selection capture using `window.getSelection()` in `ChatWidget` or a separate utility.
+- [x] T015 [US2] Implement UI to trigger a selected text query (e.g., a tooltip with "Ask about this" button).
+- [x] T016 [US2] Pass `selected_text_constraint`, `source_url_constraint`, and `section_constraint` (from current page context) to the backend `FrontendRequest`.
+- [x] T017 [US2] Enhance `ChatWidget` to display responses for constrained queries, clearly indicating any applied constraints.
+- [x] T018 [US2] Make citations clickable links in `ChatWidget` that navigate to `source_url` and scroll to the `section`.
+- [x] T019 [US2] Implement client-side logic to dynamically extract the `source_url` and nearest `section` from the current page.
 
 **Checkpoint**: Selected text queries should be fully functional.
 
@@ -76,12 +76,12 @@
 
 **Purpose**: Finalize frontend integration, ensure robustness, and update documentation.
 
-- [ ] T020 Implement draggable functionality for the floating chat button.
-- [ ] T021 Implement state management for the chat widget (e.g., preserving chat history across page navigations).
-- [ ] T022 Implement a mechanism to prevent multiple simultaneous queries.
-- [ ] T023 Code cleanup and refactoring of frontend components for clarity and performance.
-- [ ] T024 Update `website/docusaurus.config.js` with any necessary paths or configurations for the chat UI.
-- [ ] T025 Manual verification that the integration does not break existing Docusaurus content or layout.
+- [x] T020 Implement draggable functionality for the floating chat button.
+- [x] T021 Implement state management for the chat widget (e.g., preserving chat history across page navigations).
+- [x] T022 Implement a mechanism to prevent multiple simultaneous queries.
+- [x] T023 Code cleanup and refactoring of frontend components for clarity and performance.
+- [x] T024 Update `website/docusaurus.config.js` with any necessary paths or configurations for the chat UI.
+- [x] T025 Manual verification that the integration does not break existing Docusaurus content or layout.
 
 ---
 
