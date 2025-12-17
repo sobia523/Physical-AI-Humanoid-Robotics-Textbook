@@ -1,0 +1,201 @@
+import os
+import glob
+import time
+import google.generativeai as genai
+from qdrant_client import QdrantClient
+from qdrant_client.http import models
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), "../.env"), override=True)
+
+# Configure Gemini
+GEN_API_KEY = os.getenv("GEMINI_API_KEY")
+print(f"DEBUG: GEMINI_API_KEY loaded: {repr(GEN_API_KEY)}")
+
+if GEN_API_KEY:
+    genai.configure(api_key=GEN_API_KEY)
+
+# Configure Qdrant
+QDRANT_URL = os.getenv("QDRANT_URL")
+QDRANT_API_KEY = os.getenv("QDRANT_API_KEY")
+COLLECTION_NAME = "rag_content_chunks"
+
+q_client = None
+if QDRANT_URL and QDRANT_API_KEY:
+    try:
+        q_client = QdrantClient(url=QDRANT_URL, api_key=QDRANT_API_KEY)
+    except Exception as e:
+        print(f"Failed to init Qdrant: {e}")
+
+def get_embedding(text):
+    if not GEN_API_KEY: return None
+    # Retry mechanism for 429 Quota errors
+    for attempt in range(3):
+        try:
+            result = genai.embed_content(
+                model="models/embedding-001",
+                content=text,
+                task_type="retrieval_document",
+                title="Embedding of single chunk"
+            )
+            return result['embedding']
+        except Exception as e:
+            if "429" in str(e):
+                print(f"Quota hit, waiting {5 * (attempt + 1)}s...")
+                time.sleep(5 * (attempt + 1))
+            else:
+                print(f"Embedding error: {e}")
+                return None
+    return None
+
+def ingest_docs():
+    """Reads all markdown files from website/docs and ingests into Qdrant."""
+    if not q_client or not GEN_API_KEY:
+        print("Skipping ingestion: Client or Key missing")
+        return
+
+    try:
+        # Check if collection exists
+        collections = q_client.get_collections().collections
+        exists = any(c.name == COLLECTION_NAME for c in collections)
+        
+        if not exists:
+            print(f"Creating collection {COLLECTION_NAME}...")
+            q_client.create_collection(
+                collection_name=COLLECTION_NAME,
+                vectors_config=models.VectorParams(size=768, distance=models.Distance.COSINE),
+            )
+        
+        # Check if empty - SKIP AGGRESSIVE INGESTION IF DATA EXISTS
+        count_result = q_client.count(collection_name=COLLECTION_NAME)
+        if count_result.count > 0:
+            print("Collection already has data. Skipping ingestion.")
+            return
+
+        print("Ingesting documents...")
+        # Base path for docs
+        base_docs_path = os.path.join(os.path.dirname(__file__), "../../website/docs")
+        docs_path = os.path.join(base_docs_path, "**/*.md")
+        files = glob.glob(docs_path, recursive=True)
+        
+        points = []
+        idx = 0
+        MAX_CHUNKS_TO_INGEST = 10 # LIMIT FOR FREE TIER (Prevents freezing)
+        
+        for f_path in files[:MAX_CHUNKS_TO_INGEST]: # Initial Safety Limit
+            try:
+                with open(f_path, 'r', encoding='utf-8') as f:
+                    content = f.read()
+                
+                rel_path = os.path.relpath(f_path, base_docs_path).replace("\\", "/")
+                
+                chunks = content.split('\n\n')
+                for chunk in chunks:
+                    if len(chunk.strip()) < 50: continue
+                    
+                    embedding = get_embedding(chunk)
+                    if embedding:
+                        points.append(models.PointStruct(
+                            id=idx,
+                            vector=embedding,
+                            payload={"text": chunk, "source": rel_path}
+                        ))
+                        idx += 1
+                        time.sleep(2) # Force 2s delay between embeddings
+                        
+                        if len(points) >= 10: # Smaller batch
+                            q_client.upload_points(collection_name=COLLECTION_NAME, points=points)
+                            print(f"Uploaded batch...")
+                            points = []
+            except Exception as e:
+                print(f"Error processing {f_path}: {e}")
+
+        if points:
+            q_client.upload_points(collection_name=COLLECTION_NAME, points=points)
+        print("Ingestion complete (Tier limited).")
+        
+    except Exception as e:
+        print(f"Ingestion critical failure: {e}")
+
+
+# Removed auto-ingestion on import to prevent server startup timeouts.
+# Use the dedicated /ingest endpoint or run ingest_data.py script.
+
+
+async def get_answer(query: str, selected_text: str = None):
+    if not GEN_API_KEY:
+        return {"answer": "Error: GEMINI_API_KEY missing.", "citations": []}
+
+    context_text = ""
+    citations = []
+
+    # 1. Retrieval
+    if selected_text:
+        context_text = selected_text
+        citations.append({"source_url": "User Selection", "section": "Selection", "raw_text_snippet": selected_text})
+    elif q_client:
+        try:
+            # Embed query
+            q_emb = genai.embed_content(
+                model="models/embedding-001",
+                content=query,
+                task_type="retrieval_query"
+            )['embedding']
+            
+            search_result = q_client.search(
+                collection_name=COLLECTION_NAME,
+                query_vector=q_emb,
+                limit=3
+            )
+            
+            for hit in search_result:
+                context_text += hit.payload.get('text', '') + "\n---\n"
+                citations.append({
+                    "source_url": hit.payload.get('source', 'Unknown'), 
+                    "section": "Retrieved Context", 
+                    "raw_text_snippet": hit.payload.get('text', '')[:100]
+                })
+        except Exception as e:
+            print(f"Search failed: {e}")
+            context_text = "Search failed, answering from general knowledge."
+
+    # 2. Generation
+    prompt = (
+        "You are an expert AI Tutor for the textbook 'Physical AI & Humanoid Robotics'. "
+        "Use the following retrieved context to answer the student's question clearly, academically, and accurately. "
+        "If the context doesn't contain the answer, say so, but try to help based on the general domain knowledge of Robotics.\n\n"
+    )
+    
+    if context_text:
+        prompt += f"--- CONTEXT ---\n{context_text}\n---------------\n"
+    
+    prompt += f"Question: {query}\n"
+    prompt += "Answer:"
+    
+    try:
+        # User has access to Gemini 2.0/2.5 series. Using standard Flash for best stability on Free Tier.
+        model = genai.GenerativeModel('models/gemini-flash-latest')
+        
+        # Retry logic for generation (handle 429 quota limits)
+        for attempt in range(3):
+            try:
+                response = model.generate_content(prompt)
+                return {
+                    "answer": response.text,
+                    "citations": citations,
+                    "message": "Generated by Gemini"
+                }
+            except Exception as e:
+                if "429" in str(e):
+                    wait_time = 10 * (attempt + 1)
+                    print(f"Generation Quota hit, waiting {wait_time}s...")
+                    time.sleep(wait_time)
+                else:
+                    raise e # Re-raise other errors
+        
+        return {"answer": "I am currently overloaded (Free Tier Limit). Please try again in 1 minute.", "citations": []}
+
+    except Exception as e:
+        return {"answer": f"Error: {str(e)}", "citations": []}
+
